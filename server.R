@@ -12,8 +12,8 @@ shinyServer(function(input, output) {
     
     if (input$politica1=="Adelantos Transitorios"){ 
       input2 = input$politica2
-    } else if (input$politica1=="Gasto P\u00FAblico") {
-      input2 = "nada"
+    } else if (input$politica1=="Gasto e Impuestos") {
+      input2 = input$politica2l
     } else if (input$politica1=="Leliq") {
       input2 = input$politica2b
     } else if (input$politica1=="Pr\u00E9stamos") {

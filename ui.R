@@ -3,7 +3,7 @@ library(shiny)
 shinyUI(fluidPage(
     
     fluidRow(class = "text-center",
-             titlePanel("Simulación de Políticas Monetarias mediante Hojas de Balance")),
+             titlePanel("Simulación de las Hojas de Balance de la Econom\u00EDa Argentina")),
     
     fluidRow(class = "text-center",
              plotOutput("balancesheet")
@@ -23,10 +23,11 @@ shinyUI(fluidPage(
                     selectInput(
                         inputId="politica1",
                         label="Indique el instrumento a utilizar",
-                        choices=c("Adelantos Transitorios","Dep\u00F3sitos","Gasto P\u00FAblico","Leliq","Pr\u00E9stamos",
-                                  "Reservas","Balanza Comercial","Emitir Tit.Pub.",
+                        choices=c("Adelantos Transitorios","Leliq","Reservas",
+                                  "Gasto e Impuestos","Emitir Tit.Pub.",
                                   "Cancelar Tit.Pub.", "Operar Tit.Pub.Pesos",
-                                  "Operar Tit.Pub.USD","LEBAC (*)"),
+                                  "Operar Tit.Pub.USD","Dep\u00F3sitos","Pr\u00E9stamos",
+                                  "Balanza Comercial","LEBAC (*)"),
                         selected = NULL,
                         multiple = FALSE,
                         selectize = TRUE,
@@ -114,6 +115,13 @@ shinyUI(fluidPage(
                                     list("BC compra al SPnF", "BC compra al RM",
                                          "SPnF compra al BC","SPnF compra al RM",
                                          "RM compra al BC","RM compra al SPnF"))
+                    ),
+                    
+                    conditionalPanel(
+                        condition = "input.politica1 == 'Gasto e Impuestos'",
+                        selectInput("politica2l", "Elija una opci\u00F3n",
+                                    list("Gasto P\u00FAblico", "Cobrar Impuestos a SF",
+                                         "Cobrar Impuestos a SPnF"))
                     )
                     ),
              column(4,

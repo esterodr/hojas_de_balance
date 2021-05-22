@@ -214,13 +214,13 @@ gasto <- function(monto) {
     
     data$data$Variacion <- 0
     
-    m1 <- min(monto,data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.BCRA"])
+    m1 <- min(monto,data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.Vista"])
     m2 <- monto-m1
     
-    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.BCRA"] <- -1*m1
-    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.Vista"] <- -1*m2
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Dep.Tesoro"] <- -1*m1
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] <- m1
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.BCRA"] <- -1*m2
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.Vista"] <- -1*m1
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Dep.Tesoro"] <- -1*m2
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] <- m2
     data <- ajustar_encaje(data)
     data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] <- monto
     
@@ -250,6 +250,95 @@ gasto <- function(monto) {
   }
   data
 } 
+
+impuestos_sf <- function(monto) {
+  
+  if(monto<=0) {
+    
+    data$text <- "Ingrese un monto positivo, por favor"
+    
+  } else if(monto > (data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Circulante"])) {
+    
+    data$text <- "El Sector Financiero no cuenta con liquidez suficientes para esta operaci\u00F3n."
+    
+  } else {
+    
+    data$data$Variacion <- 0
+    
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.Vista"] <- monto
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] <- monto
+    data <- ajustar_encaje(data,prestamo = TRUE,monto = monto)
+    
+    data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
+                                                                                         data$data$Nombre %in% c("Circulante","Cta.Cte.")])
+    data$data$Variacion[data$data$Nombre=="M2"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
+    data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
+    
+    data$data$Color <- ifelse(data$data$Variacion==0,"white",
+                              ifelse(data$data$Variacion>0,"green","red"))
+    data$data$Color2 <- ifelse(data$data$VarAcum==0,"white",
+                               ifelse(data$data$VarAcum>0,"green","red"))
+    
+    data$text <- ""
+    
+  }
+  data
+}
+
+impuestos_sp <- function(monto) {
+  
+  if(monto<=0) {
+    
+    data$text <- "Ingrese un monto positivo, por favor"
+    
+  } else if(monto > (data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"])) {
+    
+    data$text <- "El SPnF no cuenta con suficientes dep\u00F3sitos a la vista."
+    
+  } else {
+    
+    data$data$Variacion <- 0
+    
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.Tesoro.Vista"] <- monto
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] <- -1*monto
+    
+    data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
+                                                                                         data$data$Nombre %in% c("Circulante","Cta.Cte.")])
+    data$data$Variacion[data$data$Nombre=="M2"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
+    data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
+    
+    data$data$Color <- ifelse(data$data$Variacion==0,"white",
+                              ifelse(data$data$Variacion>0,"green","red"))
+    data$data$Color2 <- ifelse(data$data$VarAcum==0,"white",
+                               ifelse(data$data$VarAcum>0,"green","red"))
+    
+    data$text <- ""
+    
+  }
+  data
+}
 
 prestamos_dar <- function(monto) {
   

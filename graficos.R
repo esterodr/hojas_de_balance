@@ -50,9 +50,15 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
       data <<- cancelar_at(monto)
     }
 
-  } else if(input1=="Gasto P\u00FAblico") {
+  } else if(input1=="Gasto e Impuestos") {
 
-    data <<- gasto(monto)
+    if(input2=="Gasto P\u00FAblico") {
+      data <<- gasto(monto)
+    } else if(input2=="Cobrar Impuestos a SF") {
+      data <<- impuestos_sf(monto)
+    } else if(input2=="Cobrar Impuestos a SPnF") {
+      data <<- impuestos_sp(monto)
+    }
 
   } else if(input1=="Leliq") {
 
