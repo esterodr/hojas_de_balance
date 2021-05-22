@@ -22,6 +22,8 @@ categorías previas. Básicamente, hogares y empresas no financieras.
 
 5. **Resto del Mundo**. Todos los no residentes.
 
+Para cada uno de estos agentes se consideran sus principales Activos y Pasivos, totalizando **41 cuentas** en total. Además, se monitorean **4 agregados monetarios**.
+
 ## Operaciones simuladas
 
 Se incluye un total de **55** operaciones posibles, tal como se describe a continuación:
@@ -109,7 +111,7 @@ dos operaciones con este instrumento:
     1. Superávit Comercial
     2. Déficit Comercial
 
-9. **LEBAC (\*) **. Eran el principal instrumento de esterilización empleado por el Banco Central entre 2002 y 2018. Se las incluye para poder simular políticas que no se pueden realizar con los LELIQ y Pases actuales. En particular, se consideran las siguientes 4 operaciones:
+9. **LEBAC**. Eran el principal instrumento de esterilización empleado por el Banco Central entre 2002 y 2018. Se las incluye para poder simular políticas que no se pueden realizar con los LELIQ y Pases actuales. En particular, se consideran las siguientes 4 operaciones:
     1. Suscribir con el Sector Privado no Financiero
     2. Sucribir con el Resto del Mundo
     3. Cancelar con el Sector Privado no Financiero

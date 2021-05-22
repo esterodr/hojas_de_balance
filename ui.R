@@ -3,23 +3,22 @@ library(shiny)
 shinyUI(fluidPage(
     
     fluidRow(class = "text-center",
-             titlePanel("Simulación de las Hojas de Balance de la Econom\u00EDa Argentina")),
+             tags$h3("Simulación de las Hojas de Balance de la Econom\u00EDa Argentina")),
     
     fluidRow(class = "text-center",
              plotOutput("balancesheet")
              ),
     
-    fluidRow(class = "text-left",
-             p("Valores en millones de pesos. Ante variaciones en el stock de dep\u00F3sitos a la vista 
+    fluidRow(class = "text-center",
+             tags$h6("Valores en millones de pesos. Ante variaciones en el stock de dep\u00F3sitos a la vista 
              se ajusta autom\u00E1ticamente la integraci\u00F3n de efectivo m\u00EDnimo. (*) Las LEBAC ya no existen, se las incluye a fines expositivos.
                El resto de los datos son reales salvo: (**) Valores completamente arbitrarios; (***)
                Se supone que el Tesoro tiene disponible inicialmente para gastar el 10% del total de dep\u00F3sitos a la vista del Sector Público")),
     
-    fluidRow(class = "text-center",
-             p()),
+    fluidRow(p()),
     
     fluidRow(class = "text-center",
-             column(4,
+             column(3,
                     selectInput(
                         inputId="politica1",
                         label="Indique el instrumento a utilizar",
@@ -34,7 +33,7 @@ shinyUI(fluidPage(
                         width = NULL,
                         size = NULL)
              ),
-             column(4,
+             column(3,
                     conditionalPanel(
                         condition = "input.politica1 == 'Adelantos Transitorios'",
                         selectInput("politica2", "Elija la acción a realizar",
@@ -124,16 +123,20 @@ shinyUI(fluidPage(
                                          "Cobrar Impuestos a SPnF"))
                     )
                     ),
-             column(4,
-                    numericInput("Monto","Monto",value=0,min=0))
+             column(3,
+                    numericInput("Monto","Monto",value=0,min=0)),
+             
+             column(3,style = "margin-top: 25px;",
+                    actionButton("Simular","Simular política"),
+                    actionButton("Reiniciar","Reiniciar"))
     ),
     
     fluidRow(class = "text-center",
-             column(9),
-             column(3,
-                    actionButton("Simular","Simular política"),
-                    actionButton("Reiniciar","Reiniciar"))
+        tags$hr(),
+        tags$h6(
+            "Para leer la documentaci\u00F3n de este proyecto, click ",
+            tags$a(href="https://github.com/esterodr/hojas_de_balance/blob/main/README.md", 
+                   "aquí.")
+        )
     )
-    
-    
 ))
