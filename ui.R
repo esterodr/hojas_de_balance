@@ -10,10 +10,8 @@ shinyUI(fluidPage(
              ),
     
     fluidRow(class = "text-center",
-             tags$h6("Valores en millones de pesos. Ante variaciones en el stock de dep\u00F3sitos a la vista 
-             se ajusta autom\u00E1ticamente la integraci\u00F3n de efectivo m\u00EDnimo. (*) Las LEBAC ya no existen, se las incluye a fines expositivos.
-               El resto de los datos son reales salvo: (**) Valores completamente arbitrarios; (***)
-               Se supone que el Tesoro tiene disponible inicialmente para gastar el 10% del total de dep\u00F3sitos a la vista del Sector Público")),
+             tags$h6("Valores en millones de pesos. (*) Las LEBAC ya no existen, se las incluye a fines expositivos.
+               Los valores son una aproximación a la realidad excepto: (**) Valores completamente arbitrarios.")),
     
     fluidRow(p()),
     
@@ -26,7 +24,7 @@ shinyUI(fluidPage(
                                   "Gasto e Impuestos","Emitir Tit.Pub.",
                                   "Cancelar Tit.Pub.", "Operar Tit.Pub.Pesos",
                                   "Operar Tit.Pub.USD","Dep\u00F3sitos","Pr\u00E9stamos",
-                                  "Balanza Comercial","LEBAC (*)"),
+                                  "Cta.Cte./Circulante","Efectivo Minimo","Balanza Comercial","LEBAC (*)"),
                         selected = NULL,
                         multiple = FALSE,
                         selectize = TRUE,
@@ -121,6 +119,19 @@ shinyUI(fluidPage(
                         selectInput("politica2l", "Elija una opci\u00F3n",
                                     list("Gasto P\u00FAblico", "Cobrar Impuestos a SF",
                                          "Cobrar Impuestos a SPnF"))
+                    ),
+                    
+                    conditionalPanel(
+                        condition = "input.politica1 == 'Cta.Cte./Circulante'",
+                        selectInput("politica2m", "Elija una opci\u00F3n",
+                                    list("Depositar pesos", "Extraer pesos",
+                                         "Depositar USD", "Extraer USD"))
+                    ),
+                    
+                    conditionalPanel(
+                        condition = "input.politica1 == 'Efectivo Minimo'",
+                        selectInput("politica2n", "Elija una opci\u00F3n",
+                                    list("Sustituir LELIQ por Bono"))
                     )
                     ),
              column(3,

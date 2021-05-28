@@ -200,6 +200,12 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
       data <<- tp_o_d_rm_sp(monto)
     }
     
+  } else if(input1=="Efectivo Minimo") {
+    
+    if(input2=="Sustituir LELIQ por Bono") {
+      data <<- em_l_b(monto)
+    } 
+    
   }
 
   # gráfico
@@ -214,9 +220,19 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     geom_segment(aes(x=ancho+1,y=-largo-2,xend=2*ancho+1,yend=-largo-2),size=1) + #horizontal5
     geom_segment(aes(x=ancho/2,y=1,xend=ancho/2,yend=1-largo),size=1) + #vertical1
     geom_segment(aes(x=3*ancho/2+1,y=1,xend=3*ancho/2+1,yend=1-largo),size=1) + #vertical2
-    geom_segment(aes(x=5*ancho/2+2,y=1,xend=5*ancho/2+2,yend=1-largo),size=1) + #vertical3
+    geom_segment(aes(x=5*ancho/2+2,y=1,xend=5*ancho/2+2,yend=1-largo-4),size=1) + #vertical3
     geom_segment(aes(x=ancho/2,y=-largo-1,xend=ancho/2,yend=-2*largo-1),size=1) + #vertical4
     geom_segment(aes(x=3*ancho/2+1,y=-largo-1,xend=3*ancho/2+1,yend=-2*largo-1),size=1) + #vertical5
+    geom_segment(aes(x=mean(var_a1,tot_a1)+0.25,y=0,xend=mean(var_a1,tot_a1)+0.25,yend=1-largo),size=0.5, linetype="dotted") + 
+    geom_segment(aes(x=mean(var_p1,tot_p1)+0.25,y=0,xend=mean(var_p1,tot_p1)+0.25,yend=1-largo),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_a2,tot_a2)+0.25,y=0,xend=mean(var_a2,tot_a2)+0.25,yend=1-largo),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_p2,tot_p2)+0.25,y=0,xend=mean(var_p2,tot_p2)+0.25,yend=1-largo),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_a3,tot_a3)+0.25,y=0,xend=mean(var_a3,tot_a3)+0.25,yend=1-largo-4),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_p3,tot_p3)+0.25,y=0,xend=mean(var_p3,tot_p3)+0.25,yend=1-largo-4),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_a1,tot_a1)+0.25,y=-largo-2,xend=mean(var_a1,tot_a1)+0.25,yend=-2*largo-1),size=0.5, linetype="dotted") + 
+    geom_segment(aes(x=mean(var_p1,tot_p1)+0.25,y=-largo-2,xend=mean(var_p1,tot_p1)+0.25,yend=-2*largo-1),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_a2,tot_a2)+0.25,y=-largo-2,xend=mean(var_a2,tot_a2)+0.25,yend=-2*largo-1),size=0.5, linetype="dotted") +
+    geom_segment(aes(x=mean(var_p2,tot_p2)+0.25,y=-largo-2,xend=mean(var_p2,tot_p2)+0.25,yend=-2*largo-1),size=0.5, linetype="dotted") +
 
     # Títulos
     geom_label(aes(x=ancho/2, y=2, label="Banco Central"), size=5) + #titulo1
@@ -244,7 +260,7 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     geom_text(aes(x=var_a2,y=-largo-2.5,label="Var.")) +
     geom_text(aes(x=var_p1,y=-largo-2.5,label="Var.")) +
     geom_text(aes(x=var_p2,y=-largo-2.5,label="Var.")) +
-    geom_text(aes(x=nombre_p3+1,y=-largo-2.5,label="Var.")) +
+    geom_text(aes(x=nombre_p3+1,y=-largo-4.5,label="Var.")) +
 
     geom_text(aes(x=tot_a1,y=-0.5,label="Acum.")) +
     geom_text(aes(x=tot_a2,y=-0.5,label="Acum.")) +
@@ -256,35 +272,35 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     geom_text(aes(x=tot_a2,y=-largo-2.5,label="Acum.")) +
     geom_text(aes(x=tot_p1,y=-largo-2.5,label="Acum.")) +
     geom_text(aes(x=tot_p2,y=-largo-2.5,label="Acum.")) +
-    geom_text(aes(x=nombre_p3+2,y=-largo-2.5,label="Acum.")) +
+    geom_text(aes(x=nombre_p3+2,y=-largo-4.5,label="Acum.")) +
     
     # Mensajes
-    geom_text(aes(x=5*ancho/2,y=-ancho-10,label=data$text),color="red",size=5) +
+    geom_text(aes(x=2*ancho/2,y=-ancho-10,label=data$text),color="red",size=5) +
 
     # Agregados
-    geom_text(aes(x=nombre_a3,y=-ancho-5.5,label="BASE MONETARIA ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-5.5,label=data$data$ValorFinal[data$data$Nombre=="Base Monetaria"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-5.5,label=data$data$Variacion[data$data$Nombre=="Base Monetaria"]),
+    geom_text(aes(x=nombre_a3,y=-ancho-7.5,label="BASE MONETARIA ="),hjust=0) +
+    geom_text(aes(x=tot_a3,y=-ancho-7.5,label=data$data$ValorFinal[data$data$Nombre=="Base Monetaria"])) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-7.5,label=data$data$Variacion[data$data$Nombre=="Base Monetaria"]),
               color=data$data$Color[data$data$Nombre=="Base Monetaria"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-5.5,label=data$data$VarAcum[data$data$Nombre=="Base Monetaria"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-7.5,label=data$data$VarAcum[data$data$Nombre=="Base Monetaria"]),
               color=data$data$Color2[data$data$Nombre=="Base Monetaria"]) +
-    geom_text(aes(x=nombre_a3,y=-ancho-6.5,label="M2 ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-6.5,label=data$data$ValorFinal[data$data$Nombre=="M2"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-6.5,label=data$data$Variacion[data$data$Nombre=="M2"]),
+    geom_text(aes(x=nombre_a3,y=-ancho-8.5,label="M2 ="),hjust=0) +
+    geom_text(aes(x=tot_a3,y=-ancho-8.5,label=data$data$ValorFinal[data$data$Nombre=="M2"])) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-8.5,label=data$data$Variacion[data$data$Nombre=="M2"]),
               color=data$data$Color[data$data$Nombre=="M2"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-6.5,label=data$data$VarAcum[data$data$Nombre=="M2"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-8.5,label=data$data$VarAcum[data$data$Nombre=="M2"]),
               color=data$data$Color2[data$data$Nombre=="M2"]) +
-    geom_text(aes(x=nombre_a3,y=-ancho-8.5,label="M3 ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-8.5,label=data$data$ValorFinal[data$data$Nombre=="M3"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-8.5,label=data$data$Variacion[data$data$Nombre=="M3"]),
+    geom_text(aes(x=nombre_a3,y=-ancho-10.5,label="M3 ="),hjust=0) +
+    geom_text(aes(x=tot_a3,y=-ancho-10.5,label=data$data$ValorFinal[data$data$Nombre=="M3"])) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-10.5,label=data$data$Variacion[data$data$Nombre=="M3"]),
               color=data$data$Color[data$data$Nombre=="M3"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-8.5,label=data$data$VarAcum[data$data$Nombre=="M3"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-10.5,label=data$data$VarAcum[data$data$Nombre=="M3"]),
               color=data$data$Color2[data$data$Nombre=="M3"]) +
-    geom_text(aes(x=nombre_a3,y=-ancho-7.5,label="M3 Privado ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-7.5,label=data$data$ValorFinal[data$data$Nombre=="M3.Privado"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-7.5,label=data$data$Variacion[data$data$Nombre=="M3.Privado"]),
+    geom_text(aes(x=nombre_a3,y=-ancho-9.5,label="M3 Privado ="),hjust=0) +
+    geom_text(aes(x=tot_a3,y=-ancho-9.5,label=data$data$ValorFinal[data$data$Nombre=="M3.Privado"])) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-9.5,label=data$data$Variacion[data$data$Nombre=="M3.Privado"]),
               color=data$data$Color[data$data$Nombre=="M3.Privado"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-7.5,label=data$data$VarAcum[data$data$Nombre=="M3.Privado"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-9.5,label=data$data$VarAcum[data$data$Nombre=="M3.Privado"]),
               color=data$data$Color2[data$data$Nombre=="M3.Privado"]) +
 
     # BCRA
@@ -320,55 +336,56 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     geom_text(aes(x=var_a1,y=-4.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]) +
 
+    geom_text(aes(x=nombre_p1,y=-1.5,label="Base Monetaria"),size = 4,hjust=0) +
     #bcra_pasivo1
-    geom_text(aes(x=nombre_p1,y=-1.5,label="Circulante"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-1.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),
-              size = 4,color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-1.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-1.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=nombre_p1,y=-2.5,label="  Circulante"),size = 3,hjust=0) +
+    geom_text(aes(x=tot_p1,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),
+              size = 3,color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]) +
+    geom_text(aes(x=valor_p1,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),size = 3,hjust=1) +
+    geom_text(aes(x=var_p1,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),size = 3,
               color=data$data$Color[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]) +
 
     #bcra_pasivo2
-    geom_text(aes(x=nombre_p1,y=-2.5,label="Cta.Cte."),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),
-              size = 4,color=data$data$Color2[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=nombre_p1,y=-3.5,label="  Cta.Cte."),size = 3,hjust=0) +
+    geom_text(aes(x=tot_p1,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),
+              size = 3,color=data$data$Color2[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]) +
+    geom_text(aes(x=valor_p1,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),size = 3,hjust=1) +
+    geom_text(aes(x=var_p1,y=-3.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),size = 3,
               color=data$data$Color[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]) +
 
     #pintar base monetaria
-    geom_polygon(aes(x=c(ancho/2,ancho+0.2,ancho+0.2,ancho/2),y=c(-1,-1,-3,-3)),fill="lightgrey",alpha=0.3) +
+    geom_polygon(aes(x=c(ancho/2,ancho+0.2,ancho+0.2,ancho/2),y=c(-1,-1,-4,-4)),fill="lightgrey",alpha=0.3) +
 
     #bcra_pasivo3
-    geom_text(aes(x=nombre_p1,y=-3.5,label="Dep.Tesoro"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),
+    geom_text(aes(x=nombre_p1,y=-4.5,label="Dep.Tesoro"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_p1,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),
               size = 4,color=data$data$Color2[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-3.5,label=data$data$Variacion[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-4.5,label=data$data$Variacion[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]) +
 
     #bcra_pasivo4
-    geom_text(aes(x=nombre_p1,y=-4.5,label="LELIQ/Pases"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),
+    geom_text(aes(x=nombre_p1,y=-5.5,label="LELIQ/Pases"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_p1,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),
               size = 4,color=data$data$Color2[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-4.5,label=data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-5.5,label=data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),size = 4,
               color=data$data$Color[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]) +
     
     #bcra_pasivo5
-    geom_text(aes(x=nombre_p1,y=-5.5,label="Cta.Cte.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),
+    geom_text(aes(x=nombre_p1,y=-6.5,label="Cta.Cte.USD"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_p1,y=-6.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),
               size = 4,color=data$data$Color2[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-5.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-6.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-6.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),size = 4,
               color=data$data$Color[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]) +
     
     #bcra_pasivo6
-    geom_text(aes(x=nombre_p1,y=-6.5,label="LEBAC (*)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-6.5,label=data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),
+    geom_text(aes(x=nombre_p1,y=-7.5,label="LEBAC (*)"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_p1,y=-7.5,label=data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),
               size = 4,color=data$data$Color2[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-6.5,label=data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-6.5,label=data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-7.5,label=data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-7.5,label=data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),size = 4,
               color=data$data$Color[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]) +
 
     # Tesoro
@@ -381,7 +398,7 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
               color=data$data$Color[data$data$Nombre=="Dep.Tesoro.BCRA"]) +
 
     #Tesoro_activo2
-    geom_text(aes(x=nombre_a2,y=-2.5,label="Dep.Vista (***)"),size = 4,hjust=0) +
+    geom_text(aes(x=nombre_a2,y=-2.5,label="Dep.Vista"),size = 4,hjust=0) +
     geom_text(aes(x=tot_a2,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Tesoro.Vista"]),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.Tesoro.Vista"]) +
     geom_text(aes(x=valor_a2,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro.Vista"]),size = 4,hjust=1) +
@@ -437,60 +454,96 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"]) +
 
     # Sistema Financiero
+    geom_text(aes(x=nombre_a3,y=-1.5,label="Efectivo M\u00EDnimo"),size = 4,hjust=0) +
     #SF_activo1
-    geom_text(aes(x=nombre_a3,y=-1.5,label="Circulante"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-1.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-1.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-1.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]) +
-
+    geom_text(aes(x=nombre_a3,y=-2.5,label="  Cta.Cte."),size = 3,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color2[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-2.5,label=data$data$Variacion[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]) +
+    
     #SF_activo2
-    geom_text(aes(x=nombre_a3,y=-2.5,label="Cta.Cte."),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color2[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]) +
-
+    geom_text(aes(x=nombre_a3,y=-3.5,label="  LELIQ"),size = 3,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color2[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-3.5,label=data$data$Variacion[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]) +
+    
     #SF_activo3
-    geom_text(aes(x=nombre_a3,y=-3.5,label="LELIQ/Pases"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color2[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-3.5,label=data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=nombre_a3,y=-4.5,label="  Tit.Pesos (**)"),size = 3,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color2[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-4.5,label=data$data$Variacion[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
     
     #SF_activo4
-    geom_text(aes(x=nombre_a3,y=-4.5,label="Pr\u00E9stamos"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color2[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-4.5,label=data$data$Variacion[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,
-              color=data$data$Color[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=nombre_a3,y=-5.5,label="  Cta.Cte.USD"),size = 3,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color2[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-5.5,label=data$data$Variacion[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]),size = 3,
+              color=data$data$Color[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]) +
+    
+    #pintar efectivo minimo
+    geom_polygon(aes(x=c(nombre_a3,2.5*ancho+2,2.5*ancho+2,nombre_a3),y=c(-1,-1,-6,-6)),fill="lightgrey",alpha=0.3) +
     
     #SF_activo5
-    geom_text(aes(x=nombre_a3,y=-5.5,label="Cta.Cte.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=nombre_a3,y=-6.5,label="Circulante"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-6.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-6.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-6.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]) +
+
+    #SF_activo6
+    geom_text(aes(x=nombre_a3,y=-7.5,label="Cta.Cte."),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-7.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color2[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-7.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-7.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]) +
+
+    #SF_activo7
+    geom_text(aes(x=nombre_a3,y=-8.5,label="LELIQ/Pases"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-8.5,label=data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color2[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-8.5,label=data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-8.5,label=data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]) +
+    
+    #SF_activo8
+    geom_text(aes(x=nombre_a3,y=-9.5,label="Pr\u00E9stamos"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-9.5,label=data$data$VarAcum[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color2[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]) +
+    geom_text(aes(x=valor_a3,y=-9.5,label=data$data$ValorFinal[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-9.5,label=data$data$Variacion[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,
+              color=data$data$Color[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]) +
+    
+    #SF_activo9
+    geom_text(aes(x=nombre_a3,y=-10.5,label="Cta.Cte.USD"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-10.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,
               color=data$data$Color2[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-5.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-10.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-10.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,
               color=data$data$Color[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]) +
     
-    #SF_activo6
-    geom_text(aes(x=nombre_a3,y=-6.5,label="USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-6.5,label=data$data$VarAcum[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,
+    #SF_activo10
+    geom_text(aes(x=nombre_a3,y=-11.5,label="USD"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-11.5,label=data$data$VarAcum[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,
               color=data$data$Color2[data$data$Nombre=="USD"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-6.5,label=data$data$ValorFinal[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-6.5,label=data$data$Variacion[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-11.5,label=data$data$ValorFinal[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-11.5,label=data$data$Variacion[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,
               color=data$data$Color[data$data$Nombre=="USD"&data$data$Agente=="SF"]) +
     
-    #SF_activo7
-    geom_text(aes(x=nombre_a3,y=-7.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-7.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,
+    #SF_activo11
+    geom_text(aes(x=nombre_a3,y=-12.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_a3,y=-12.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,
               color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-7.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-7.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-12.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-12.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
 
     #SF_pasivo1

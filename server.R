@@ -34,6 +34,10 @@ shinyServer(function(input, output) {
       input2 = input$politica2j
     } else if (input$politica1=="Operar Tit.Pub.USD") {
       input2 = input$politica2k
+    } else if (input$politica1=="Cta.Cte./Circulante") {
+      input2 = input$politica2m
+    } else if (input$politica1=="Efectivo Minimo") {
+      input2 = input$politica2n
     }
     
     grafico$data <- balancesheet(data,input$politica1,input2,input$Monto)
