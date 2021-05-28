@@ -124,8 +124,8 @@ shinyUI(fluidPage(
                     conditionalPanel(
                         condition = "input.politica1 == 'Cta.Cte./Circulante'",
                         selectInput("politica2m", "Elija una opci\u00F3n",
-                                    list("Depositar pesos", "Extraer pesos",
-                                         "Depositar USD", "Extraer USD"))
+                                    list("Circulante a Cta.Cte.", "Cta.Cte. a Circulante",
+                                         "USD a Cta.Cte.USD", "Cta.Cte.USD a USD"))
                     ),
                     
                     conditionalPanel(

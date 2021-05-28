@@ -2629,8 +2629,6 @@ tp_o_p_rm_sp <- function(monto) {
   data
 }
 
-#revisado hasta acá
-
 tp_o_d_bc_sp <- function(monto) {
   
   if(monto<=0) {
@@ -2971,6 +2969,206 @@ em_l_b <- function(monto) {
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Tit.Pub.Pesos"] <- monto
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_LELIQ"] <- -1*monto
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="LELIQ"] <- monto
+    
+    
+    data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
+                                                                                         data$data$Nombre %in% c("Circulante","Cta.Cte.")])
+    data$data$Variacion[data$data$Nombre=="M2"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
+    data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
+    
+    data$data$Color <- ifelse(data$data$Variacion==0,"white",
+                              ifelse(data$data$Variacion>0,"green","red"))
+    data$data$Color2 <- ifelse(data$data$VarAcum==0,"white",
+                               ifelse(data$data$VarAcum>0,"green","red"))
+    
+    if(data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Circulante"]<0) {
+      data$text <- "El Sector Financiero tiene el Circulante en negativo. Consiga liquidez,
+      por favor."
+    } else {data$text <- ""}
+    
+  }
+  data
+}
+
+sf_circ_cc <- function(monto) {
+  
+  if(monto<=0) {
+    
+    data$text <- "Ingrese un monto positivo, por favor"
+    
+  } else if(monto>data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Circulante"]) {
+    
+    data$text <- "El SPnF no dispone de tantos circulante"
+    
+  } else {
+    
+    data$data$Variacion <- 0
+    
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Circulante"] <- -1*monto
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte."] <- monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Circulante"] <- -1*monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte."] <- monto
+    
+    
+    data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
+                                                                                         data$data$Nombre %in% c("Circulante","Cta.Cte.")])
+    data$data$Variacion[data$data$Nombre=="M2"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
+    data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
+    
+    data$data$Color <- ifelse(data$data$Variacion==0,"white",
+                              ifelse(data$data$Variacion>0,"green","red"))
+    data$data$Color2 <- ifelse(data$data$VarAcum==0,"white",
+                               ifelse(data$data$VarAcum>0,"green","red"))
+    
+    if(data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Circulante"]<0) {
+      data$text <- "El Sector Financiero tiene el Circulante en negativo. Consiga liquidez,
+      por favor."
+    } else {data$text <- ""}
+    
+  }
+  data
+}
+
+sf_cc_circ <- function(monto) {
+  
+  if(monto<=0) {
+    
+    data$text <- "Ingrese un monto positivo, por favor"
+    
+  } else if(monto>data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte."]) {
+    
+    data$text <- "El SPnF no dispone de saldo suficiente en la Cta.Cte."
+    
+  } else {
+    
+    data$data$Variacion <- 0
+    
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Circulante"] <- monto
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte."] <- -1*monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Circulante"] <- monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte."] <- -1*monto
+    
+    
+    data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
+                                                                                         data$data$Nombre %in% c("Circulante","Cta.Cte.")])
+    data$data$Variacion[data$data$Nombre=="M2"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
+    data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
+    
+    data$data$Color <- ifelse(data$data$Variacion==0,"white",
+                              ifelse(data$data$Variacion>0,"green","red"))
+    data$data$Color2 <- ifelse(data$data$VarAcum==0,"white",
+                               ifelse(data$data$VarAcum>0,"green","red"))
+    
+    if(data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Circulante"]<0) {
+      data$text <- "El Sector Financiero tiene el Circulante en negativo. Consiga liquidez,
+      por favor."
+    } else {data$text <- ""}
+    
+  }
+  data
+}
+
+sf_usd_cc <- function(monto) {
+  
+  if(monto<=0) {
+    
+    data$text <- "Ingrese un monto positivo, por favor"
+    
+  } else if(monto>data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="USD"]) {
+    
+    data$text <- "El SPnF no dispone de suficientes d\u00F3lares."
+    
+  } else {
+    
+    data$data$Variacion <- 0
+    
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"] <- monto
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="USD"] <- -1*monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte.USD"] <- monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] <- monto
+    
+    
+    data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
+                                                                                         data$data$Nombre %in% c("Circulante","Cta.Cte.")])
+    data$data$Variacion[data$data$Nombre=="M2"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
+      data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
+    data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
+    
+    data$data$Color <- ifelse(data$data$Variacion==0,"white",
+                              ifelse(data$data$Variacion>0,"green","red"))
+    data$data$Color2 <- ifelse(data$data$VarAcum==0,"white",
+                               ifelse(data$data$VarAcum>0,"green","red"))
+    
+    if(data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Circulante"]<0) {
+      data$text <- "El Sector Financiero tiene el Circulante en negativo. Consiga liquidez,
+      por favor."
+    } else {data$text <- ""}
+    
+  }
+  data
+}
+
+sf_cc_usd <- function(monto) {
+  
+  if(monto<=0) {
+    
+    data$text <- "Ingrese un monto positivo, por favor"
+    
+  } else if(monto>data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="USD"]) {
+    
+    data$text <- "El SPnF no dispone de saldo suficiente en la Cta.Cte. en USD"
+    
+  } else {
+    
+    data$data$Variacion <- 0
+    
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"] <- -1*monto
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="USD"] <- monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte.USD"] <- -1*monto
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] <- -1*monto
     
     
     data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&

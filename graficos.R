@@ -206,6 +206,18 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
       data <<- em_l_b(monto)
     } 
     
+  } else if(input1=="Cta.Cte./Circulante") {
+    
+    if(input2=="Circulante a Cta.Cte.") {
+      data <<- sf_circ_cc(monto)
+    } else if(input2=="Cta.Cte. a Circulante") {
+      data <<- sf_cc_circ(monto)
+    } else if(input2=="USD a Cta.Cte.USD") {
+      data <<- sf_usd_cc(monto)
+    } else if(input2=="Cta.Cte.USD a USD") {
+      data <<- sf_cc_usd(monto)
+    } 
+    
   }
 
   # gráfico
