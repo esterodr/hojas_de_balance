@@ -692,7 +692,8 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     theme(panel.background = element_blank(),
           axis.text = element_blank(),
           axis.ticks = element_blank(),
-          axis.title = element_blank())
+          axis.title = element_blank(),
+          plot.margin = unit(c(0,0,0,0),"cm"))
 
   grafico
 }
