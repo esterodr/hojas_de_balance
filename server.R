@@ -38,6 +38,8 @@ shinyServer(function(input, output) {
       input2 = input$politica2m
     } else if (input$politica1=="Efectivo Minimo") {
       input2 = input$politica2n
+    } else if (input$politica1=="Transcurso del Tiempo") {
+      input2 = c(input$politica2o1,input$politica2o2,input$politica2o3)
     }
     
     grafico$data <- balancesheet(data,input$politica1,input2,input$Monto)

@@ -24,7 +24,8 @@ shinyUI(fluidPage(
                                   "Gasto e Impuestos","Emitir Tit.Pub.",
                                   "Cancelar Tit.Pub.", "Operar Tit.Pub.Pesos",
                                   "Operar Tit.Pub.USD","Dep\u00F3sitos","Pr\u00E9stamos",
-                                  "Cta.Cte./Circulante","Efectivo Minimo","Balanza Comercial","LEBAC (*)"),
+                                  "Cta.Cte./Circulante","Efectivo Minimo","Balanza Comercial","LEBAC (*)",
+                                  "Transcurso del Tiempo"),
                         selected = NULL,
                         multiple = FALSE,
                         selectize = TRUE,
@@ -132,10 +133,30 @@ shinyUI(fluidPage(
                         condition = "input.politica1 == 'Efectivo Minimo'",
                         selectInput("politica2n", "Elija una opci\u00F3n",
                                     list("Sustituir LELIQ por Bono"))
+                    ),
+                    
+                    conditionalPanel(
+                        condition = "input.politica1 == 'Transcurso del Tiempo'",
+                        fluidRow(numericInput(inputId = "politica2o1",
+                                              label = "Variación Tipo de Cambio (%)",
+                                              value = 0)),
+                        fluidRow(numericInput(inputId = "politica2o2",
+                                              label = "Intereses Devengados en Pesos (%)",
+                                              value = 0))
                     )
                     ),
              column(3,
-                    numericInput("Monto","Monto",value=0,min=0)),
+                    conditionalPanel(
+                        condition = "input.politica1 !== 'Transcurso del Tiempo'", 
+                        numericInput("Monto","Monto",value=0,min=0)
+                    ),
+                    conditionalPanel(
+                        condition = "input.politica1 == 'Transcurso del Tiempo'", 
+                        numericInput(inputId = "politica2o3",
+                                     label = "Intereses Devengados en USD (%)",
+                                     value = 0)
+                    )
+                    ),
              
              column(3,style = "margin-top: 25px;",
                     actionButton("Simular","Simular política"),

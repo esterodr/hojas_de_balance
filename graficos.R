@@ -218,6 +218,10 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
       data <<- sf_cc_usd(monto)
     } 
     
+  } else if(input1=="Transcurso del Tiempo") {
+    
+    data <<- tiempo(input2)
+    
   }
 
   # gráfico
@@ -693,7 +697,10 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
           axis.text = element_blank(),
           axis.ticks = element_blank(),
           axis.title = element_blank(),
-          plot.margin = unit(c(0,0,0,0),"cm"))
+          axis.ticks.length = unit(0, "pt"),
+          plot.margin = margin(c(0,0,0,0),"cm"),
+          panel.spacing = unit(0, "cm")) +
+    xlim(nombre_a1-0.1,3*ancho+2+0.1)
 
   grafico
 }
