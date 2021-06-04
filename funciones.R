@@ -47,6 +47,53 @@ ajustar_encaje <- function(data,moneda="p") {
   data
 }
 
+ajustar_usd <- function(data) {
+  data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas_USD"] <- 
+    round((data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] +
+             data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas"])/data$tc -
+            data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Reservas_USD"])
+  data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="LEBAC_USD"] <- 
+    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"] +
+             data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"])/data$tc -
+            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="LEBAC_USD"])
+  data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos_USD"] <- 
+    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"] +
+             data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"])/data$tc -
+            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos_USD"])
+  data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD_USD"] <- 
+    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"] +
+             data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"])/data$tc -
+            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD_USD"])
+  data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas_USD"] <- 
+    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas"] +
+             data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas"])/data$tc -
+            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas_USD"])
+  data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Resultado_USD"] <- 
+    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Resultado"] +
+             data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Resultado"])/data$tc -
+            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Resultado_USD"])
+  data
+}
+
+ajustar_resultado <- function(data) {
+  data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Resultado"] <- 
+    sum(data$data$Variacion[data$data$Agente=="BC"&data$data$Tipo=="A"]) -
+          sum(data$data$Variacion[data$data$Agente=="BC"&data$data$Tipo=="P"])
+  data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Resultado"] <- 
+    sum(data$data$Variacion[data$data$Agente=="T"&data$data$Tipo=="A"]) -
+          sum(data$data$Variacion[data$data$Agente=="T"&data$data$Tipo=="P"])
+  data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Resultado"] <- 
+    sum(data$data$Variacion[data$data$Agente=="SF"&data$data$Tipo=="A"]) -
+          sum(data$data$Variacion[data$data$Agente=="SF"&data$data$Tipo=="P"])
+  data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Resultado"] <- 
+    sum(data$data$Variacion[data$data$Agente=="H"&data$data$Tipo=="A"]) -
+          sum(data$data$Variacion[data$data$Agente=="H"&data$data$Tipo=="P"])
+  data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Resultado"] <- 
+    sum(data$data$Variacion[data$data$Agente=="RM"&data$data$Tipo=="A"]) -
+          sum(data$data$Variacion[data$data$Agente=="RM"&data$data$Tipo=="P"])
+  data
+}
+
 emision_at <- function(monto) {
   
   if(monto<=0) {
@@ -119,6 +166,9 @@ cancelar_at <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -171,6 +221,9 @@ cancelar_le <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -221,6 +274,9 @@ emision_le <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -276,6 +332,9 @@ gasto <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -322,6 +381,9 @@ impuestos_sf <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -365,6 +427,9 @@ impuestos_sp <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -415,6 +480,9 @@ prestamos_dar <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -462,6 +530,9 @@ prestamos_can <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -506,6 +577,9 @@ trade_sup <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -555,6 +629,9 @@ trade_def <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -608,6 +685,9 @@ res_c_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -660,6 +740,9 @@ res_c_sf <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -708,6 +791,9 @@ res_c_g <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -765,6 +851,9 @@ res_v_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -815,6 +904,9 @@ res_v_sf <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -877,6 +969,9 @@ res_v_g <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -924,6 +1019,9 @@ dep_p <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -970,6 +1068,9 @@ dep_USD <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1048,6 +1149,9 @@ extraer_p <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1128,6 +1232,9 @@ extraer_USD <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1174,6 +1281,9 @@ PF_hacer <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1224,6 +1334,9 @@ PF_cancelar <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1277,6 +1390,9 @@ lebac_sp_sus <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1326,6 +1442,9 @@ lebac_sp_can <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1367,6 +1486,9 @@ lebac_rm_sus <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1414,6 +1536,9 @@ lebac_rm_can <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1459,6 +1584,9 @@ tp_em_p_sp <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1511,6 +1639,9 @@ tp_em_p_sf <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1557,6 +1688,9 @@ tp_em_p_rm <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1612,6 +1746,9 @@ tp_em_d_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1655,6 +1792,9 @@ tp_em_d_rm <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1719,6 +1859,9 @@ tp_c_p_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1777,6 +1920,9 @@ tp_c_p_sf <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1841,6 +1987,9 @@ tp_c_p_rm <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -1909,6 +2058,9 @@ tp_c_d_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -1970,6 +2122,9 @@ tp_c_d_rm <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2018,6 +2173,9 @@ tp_o_p_bc_sf <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2071,6 +2229,9 @@ tp_o_p_bc_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2119,6 +2280,9 @@ tp_o_p_bc_rm <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2175,6 +2339,9 @@ tp_o_p_sf_bc <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2229,6 +2396,9 @@ tp_o_p_sf_sp <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2290,6 +2460,9 @@ tp_o_p_sf_rm <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2346,6 +2519,9 @@ tp_o_p_sp_bc <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2399,6 +2575,9 @@ tp_o_p_sp_sf <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2458,6 +2637,9 @@ tp_o_p_sp_rm <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2506,6 +2688,9 @@ tp_o_p_rm_bc <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2557,6 +2742,9 @@ tp_o_p_rm_sf <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2612,6 +2800,9 @@ tp_o_p_rm_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2664,6 +2855,9 @@ tp_o_d_bc_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2712,6 +2906,9 @@ tp_o_d_bc_rm <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2768,6 +2965,9 @@ tp_o_d_sp_bc <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2827,6 +3027,9 @@ tp_o_d_sp_rm <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2875,6 +3078,9 @@ tp_o_d_rm_bc <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -2930,6 +3136,9 @@ tp_o_d_rm_sp <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -2984,6 +3193,9 @@ em_l_b <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -3033,6 +3245,9 @@ sf_circ_cc <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -3084,6 +3299,9 @@ sf_cc_circ <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -3134,6 +3352,9 @@ sf_usd_cc <- function(monto) {
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
     
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
+    
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
     
@@ -3183,6 +3404,9 @@ sf_cc_usd <- function(monto) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
@@ -3271,7 +3495,7 @@ tiempo <- function(porcentajes) {
                                                                                            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"])
     data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas"] <- round((porcentajes[1]/100)*
                                                                                      data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas"])
-    
+    data$tc <- data$tc*(1+porcentajes[1]/100)
     
     
     data$data$Variacion[data$data$Nombre=="Base Monetaria"] <- sum(data$data$Variacion[data$data$Agente=="BC"&
@@ -3286,6 +3510,9 @@ tiempo <- function(porcentajes) {
     data$data$Variacion[data$data$Nombre=="M3.Privado"] <- data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.Vista"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] +
       data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Circulante"]
+    
+    data <- ajustar_resultado(data)
+    data <- ajustar_usd(data)
     
     data$data$VarAcum <- data$data$VarAcum + data$data$Variacion
     data$data$ValorFinal <- data$data$ValorInicial + data$data$VarAcum
