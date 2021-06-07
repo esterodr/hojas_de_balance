@@ -54,6 +54,7 @@ shinyServer(function(input, output) {
     data$data$Color2 <- "white"
     grafico$data <- balancesheet(data,"NA","NA","NA")
     data$text <- ""
+    data$tc <- data$tc_old
     data <<- data 
   })  
   

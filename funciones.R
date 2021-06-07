@@ -2,7 +2,7 @@
 ajustar_encaje <- function(data,moneda="p") {
   if(moneda=="d") {
     
-    m1 <- round(data$encaje$VistaUSD*data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.USD"])
+    m1 <- data$encaje$VistaUSD*data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.USD"]
                 
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte.USD"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte.USD"] + m1
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"] - m1
@@ -19,11 +19,11 @@ ajustar_encaje <- function(data,moneda="p") {
       
     }
     } else {
-    bote <- round(data$encaje$bote*(data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
+    bote <- (data$encaje$bote*(data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"] +
                                       data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"]))
-    leliq <- round(data$encaje$leliq*(data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"]))
-    cc <- round(data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"]*data$encaje$VistaPesos)
-    #extra <- round(data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"]*(1-data$encaje$VistaPesos))
+    leliq <- (data$encaje$leliq*(data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"]))
+    cc <- (data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"]*data$encaje$VistaPesos)
+    #extra <- (data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.Vista"]*(1-data$encaje$VistaPesos))
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte."] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte."] + cc
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte."] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte."] - cc
     data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_LELIQ"] <- data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_LELIQ"] + leliq
@@ -49,27 +49,27 @@ ajustar_encaje <- function(data,moneda="p") {
 
 ajustar_usd <- function(data) {
   data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas_USD"] <- 
-    round((data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] +
+    ((data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] +
              data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas"])/data$tc -
             data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Reservas_USD"])
   data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="LEBAC_USD"] <- 
-    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"] +
+    ((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"] +
              data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"])/data$tc -
             data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="LEBAC_USD"])
   data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos_USD"] <- 
-    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"] +
+    ((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"] +
              data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"])/data$tc -
             data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos_USD"])
   data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD_USD"] <- 
-    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"] +
+    ((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"] +
              data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"])/data$tc -
             data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD_USD"])
   data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas_USD"] <- 
-    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas"] +
+    ((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas"] +
              data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas"])/data$tc -
             data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas_USD"])
   data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Resultado_USD"] <- 
-    round((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Resultado"] +
+    ((data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Resultado"] +
              data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Resultado"])/data$tc -
             data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Resultado_USD"])
   data
@@ -3429,72 +3429,70 @@ tiempo <- function(porcentajes) {
   
     data$data$Variacion <- 0
     
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Reservas"] <- ((porcentajes[1]/100)*
       data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Reservas"])
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.Pesos"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.Pesos"] <- ((porcentajes[2]/100)*
                                                                                         data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.Pesos"])
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.USD"] <- round(((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.USD"] <- (((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
                                                                                              data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.USD"])-
                                                                                            data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Tit.Pub.USD"])
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="LELIQ"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="LELIQ"] <- ((porcentajes[2]/100)*
                                                                                            data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="LELIQ"])
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte.USD"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte.USD"] <- ((porcentajes[1]/100)*
                                                                                            data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="Cta.Cte.USD"])
-    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="LEBAC"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="BC"&data$data$Nombre=="LEBAC"] <- ((porcentajes[2]/100)*
                                                                                            data$data$ValorFinal[data$data$Agente=="BC"&data$data$Nombre=="LEBAC"])
-    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.USD"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Dep.USD"] <- ((porcentajes[1]/100)*
                                                                                      data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Dep.USD"])
-    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Plazo.Fijo"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Plazo.Fijo"] <- ((porcentajes[2]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Plazo.Fijo"])
-    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.Pesos"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.Pesos"] <- ((porcentajes[2]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.Pesos"])
-    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.USD"] <- round(((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.USD"] <- (((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
                                                                                        data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.USD"])-
                                                                                       data$data$ValorFinal[data$data$Agente=="T"&data$data$Nombre=="Tit.Pub.USD"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_LELIQ"] <- round((porcentajes[2]/100)*
-                                                                                            data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="EM_LELIQ"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="LELIQ"] <- round((porcentajes[2]/100)*
-                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="LELIQ"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Prestamos"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="LELIQ"] <- ((porcentajes[2]/100)*(data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="EM_LELIQ"] +
+                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="LELIQ"]))
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Prestamos"] <- ((porcentajes[2]/100)*
                                                                                         data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Prestamos"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Tit.Pub.Pesos"] <- round((porcentajes[2]/100)*
-                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="EM_Tit.Pub.Pesos"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Tit.Pub.Pesos"] <- round((porcentajes[2]/100)*
-                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Tit.Pub.Pesos"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Tit.Pub.Pesos"] <- ((porcentajes[2]/100)*(data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="EM_Tit.Pub.Pesos"] +
+                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Tit.Pub.Pesos"]))
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"] <- ((porcentajes[2]/100)*
                                                                                         data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Plazo.Fijo"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte.USD"] <- round((porcentajes[1]/100)*
-                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte.USD"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"] <- round((porcentajes[1]/100)*
-                                                                                        data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="USD"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"] <- ((porcentajes[1]/100)*
+                                                                                        (data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="EM_Cta.Cte.USD"] +
+                                                                                           data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Cta.Cte.USD"]))
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="USD"] <- ((porcentajes[1]/100)*
                                                                                         data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="USD"])
-    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.USD"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="SF"&data$data$Nombre=="Dep.USD"] <- ((porcentajes[1]/100)*
                                                                                         data$data$ValorFinal[data$data$Agente=="SF"&data$data$Nombre=="Dep.USD"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.USD"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Dep.USD"] <- ((porcentajes[1]/100)*
                                                                                        data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Dep.USD"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="USD"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="USD"] <- ((porcentajes[1]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="USD"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"] <- ((porcentajes[2]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Plazo.Fijo"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.Pesos"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.Pesos"] <- ((porcentajes[2]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.Pesos"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="LEBAC"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="LEBAC"] <- ((porcentajes[2]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="LEBAC"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Prestamos"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Prestamos"] <- ((porcentajes[2]/100)*
                                                                                       data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Prestamos"])
-    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.USD"] <- round(((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.USD"] <- (((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
                                                                                            data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.USD"])-
                                                                                           data$data$ValorFinal[data$data$Agente=="H"&data$data$Nombre=="Tit.Pub.USD"])
-    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"] <- ((porcentajes[2]/100)*
                                                                                         data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="LEBAC"])
-    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"] <- round((porcentajes[2]/100)*
+    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"] <- ((porcentajes[2]/100)*
                                                                                      data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.Pesos"])
-    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"] <- round(((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"] <- (((1+porcentajes[3]/100)*(1+porcentajes[1]/100)*
                                                                                             data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"])-
                                                                                            data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Tit.Pub.USD"])
-    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas"] <- round((porcentajes[1]/100)*
+    data$data$Variacion[data$data$Agente=="RM"&data$data$Nombre=="Divisas"] <- ((porcentajes[1]/100)*
                                                                                      data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas"])
+    
+    data <- ajustar_encaje(data)
+    data <- ajustar_encaje(data,moneda = "d")
     data$tc <- data$tc*(1+porcentajes[1]/100)
     
     

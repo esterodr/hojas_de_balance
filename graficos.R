@@ -28,6 +28,7 @@ tot_p2 <- nombre_p2+7*ancho/16
 tot_a3 <- nombre_a3+7*ancho/16-.1
 tot_p3 <- nombre_p3+7*ancho/16
 
+decimal <- 1
 
 balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
 
@@ -295,86 +296,86 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
 
     # Agregados
     geom_text(aes(x=nombre_a3,y=-ancho-7.5,label="BASE MONETARIA ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-7.5,label=data$data$ValorFinal[data$data$Nombre=="Base Monetaria"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-7.5,label=data$data$Variacion[data$data$Nombre=="Base Monetaria"]),
+    geom_text(aes(x=tot_a3,y=-ancho-7.5,label=round(data$data$ValorFinal[data$data$Nombre=="Base Monetaria"],decimal))) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-7.5,label=round(data$data$Variacion[data$data$Nombre=="Base Monetaria"],decimal)),
               color=data$data$Color[data$data$Nombre=="Base Monetaria"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-7.5,label=data$data$VarAcum[data$data$Nombre=="Base Monetaria"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-7.5,label=round(data$data$VarAcum[data$data$Nombre=="Base Monetaria"],decimal)),
               color=data$data$Color2[data$data$Nombre=="Base Monetaria"]) +
     geom_text(aes(x=nombre_a3,y=-ancho-8.5,label="M2 ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-8.5,label=data$data$ValorFinal[data$data$Nombre=="M2"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-8.5,label=data$data$Variacion[data$data$Nombre=="M2"]),
+    geom_text(aes(x=tot_a3,y=-ancho-8.5,label=round(data$data$ValorFinal[data$data$Nombre=="M2"],decimal))) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-8.5,label=round(data$data$Variacion[data$data$Nombre=="M2"],decimal)),
               color=data$data$Color[data$data$Nombre=="M2"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-8.5,label=data$data$VarAcum[data$data$Nombre=="M2"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-8.5,label=round(data$data$VarAcum[data$data$Nombre=="M2"],decimal)),
               color=data$data$Color2[data$data$Nombre=="M2"]) +
     geom_text(aes(x=nombre_a3,y=-ancho-10.5,label="M3 ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-10.5,label=data$data$ValorFinal[data$data$Nombre=="M3"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-10.5,label=data$data$Variacion[data$data$Nombre=="M3"]),
+    geom_text(aes(x=tot_a3,y=-ancho-10.5,label=round(data$data$ValorFinal[data$data$Nombre=="M3"],decimal))) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-10.5,label=round(data$data$Variacion[data$data$Nombre=="M3"],decimal)),
               color=data$data$Color[data$data$Nombre=="M3"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-10.5,label=data$data$VarAcum[data$data$Nombre=="M3"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-10.5,label=round(data$data$VarAcum[data$data$Nombre=="M3"],decimal)),
               color=data$data$Color2[data$data$Nombre=="M3"]) +
     geom_text(aes(x=nombre_a3,y=-ancho-9.5,label="M3 Privado ="),hjust=0) +
-    geom_text(aes(x=tot_a3,y=-ancho-9.5,label=data$data$ValorFinal[data$data$Nombre=="M3.Privado"])) +
-    geom_text(aes(x=nombre_p3+1,y=-ancho-9.5,label=data$data$Variacion[data$data$Nombre=="M3.Privado"]),
+    geom_text(aes(x=tot_a3,y=-ancho-9.5,label=round(data$data$ValorFinal[data$data$Nombre=="M3.Privado"],decimal))) +
+    geom_text(aes(x=nombre_p3+1,y=-ancho-9.5,label=round(data$data$Variacion[data$data$Nombre=="M3.Privado"],decimal)),
               color=data$data$Color[data$data$Nombre=="M3.Privado"]) +
-    geom_text(aes(x=nombre_p3+2,y=-ancho-9.5,label=data$data$VarAcum[data$data$Nombre=="M3.Privado"]),
+    geom_text(aes(x=nombre_p3+2,y=-ancho-9.5,label=round(data$data$VarAcum[data$data$Nombre=="M3.Privado"],decimal)),
               color=data$data$Color2[data$data$Nombre=="M3.Privado"]) +
 
     # BCRA
     #bcra_activo1
     geom_text(aes(x=nombre_a1,y=-1.5,label="Reservas"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-1.5,label=data$data$VarAcum[data$data$Nombre=="Reservas"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-1.5,label=round(data$data$VarAcum[data$data$Nombre=="Reservas"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Reservas"]) +
-    geom_text(aes(x=valor_a1,y=-1.5,label=data$data$ValorFinal[data$data$Nombre=="Reservas"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-1.5,label=data$data$Variacion[data$data$Nombre=="Reservas"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-1.5,label=round(data$data$ValorFinal[data$data$Nombre=="Reservas"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-1.5,label=round(data$data$Variacion[data$data$Nombre=="Reservas"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Reservas"]) +
     
     #bcra_activo1 usd
     geom_text(aes(x=nombre_a1,y=-2.5,label=" Reservas (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Reservas_USD"]),size = 3,
+    geom_text(aes(x=tot_a1,y=-2.5,label=round(data$data$VarAcum[data$data$Nombre=="Reservas_USD"],decimal)),size = 3,
               color=data$data$Color2[data$data$Nombre=="Reservas_USD"]) +
-    geom_text(aes(x=valor_a1,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Reservas_USD"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a1,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Reservas_USD"]),size = 3,
+    geom_text(aes(x=valor_a1,y=-2.5,label=round(data$data$ValorFinal[data$data$Nombre=="Reservas_USD"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a1,y=-2.5,label=round(data$data$Variacion[data$data$Nombre=="Reservas_USD"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Reservas_USD"]) +
 
     #bcra_activo2
     geom_text(aes(x=nombre_a1,y=-3.5,label="ATs"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="ATs"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_a1,y=-3.5,label=round(data$data$VarAcum[data$data$Nombre=="ATs"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="ATs"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_a1,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="ATs"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-3.5,label=data$data$Variacion[data$data$Nombre=="ATs"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-3.5,label=round(data$data$ValorFinal[data$data$Nombre=="ATs"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-3.5,label=round(data$data$Variacion[data$data$Nombre=="ATs"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="ATs"&data$data$Agente=="BC"]) +
     
     #bcra_activo3
     geom_text(aes(x=nombre_a1,y=-4.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_a1,y=-4.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_a1,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-4.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-4.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-4.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="BC"]) +
     
     #bcra_activo4
     geom_text(aes(x=nombre_a1,y=-5.5,label="Tit.USD (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_a1,y=-5.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_a1,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-5.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-5.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="BC"]) +
 
     geom_text(aes(x=nombre_p1,y=-1.5,label="Base Monetaria"),size = 4,hjust=0) +
     #bcra_pasivo1
     geom_text(aes(x=nombre_p1,y=-2.5,label="  Circulante"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-2.5,label=round(data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="BC"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_p1,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]),size = 3,
+    geom_text(aes(x=valor_p1,y=-2.5,label=round(data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="BC"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_p1,y=-2.5,label=round(data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="BC"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Circulante"&data$data$Agente=="BC"]) +
 
     #bcra_pasivo2
     geom_text(aes(x=nombre_p1,y=-3.5,label="  Cta.Cte."),size = 3,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-3.5,label=round(data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_p1,y=-3.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]),size = 3,
+    geom_text(aes(x=valor_p1,y=-3.5,label=round(data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_p1,y=-3.5,label=round(data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Cta.Cte."&data$data$Agente=="BC"]) +
 
     #pintar base monetaria
@@ -382,116 +383,116 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
 
     #bcra_pasivo3
     geom_text(aes(x=nombre_p1,y=-4.5,label="Dep.Tesoro"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-4.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-4.5,label=data$data$Variacion[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-4.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-4.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Tesoro"&data$data$Agente=="BC"]) +
 
     #bcra_pasivo4
     geom_text(aes(x=nombre_p1,y=-5.5,label="LELIQ/Pases"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-5.5,label=round(data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-5.5,label=data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-5.5,label=round(data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="LELIQ"&data$data$Agente=="BC"]) +
     
     #bcra_pasivo5
     geom_text(aes(x=nombre_p1,y=-6.5,label="Cta.Cte.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-6.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-6.5,label=round(data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-6.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-6.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-6.5,label=round(data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-6.5,label=round(data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="BC"]) +
     
     #bcra_pasivo6
     geom_text(aes(x=nombre_p1,y=-7.5,label="LEBAC (*)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-7.5,label=data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-7.5,label=round(data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-7.5,label=data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-7.5,label=data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-7.5,label=round(data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-7.5,label=round(data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="LEBAC"&data$data$Agente=="BC"]) +
     
     #bcra_resultado
     geom_text(aes(x=nombre_p1,y=-8.5,label="Resultado"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-8.5,label=data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="BC"]),
+    geom_text(aes(x=tot_p1,y=-8.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="BC"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="BC"]) +
-    geom_text(aes(x=valor_p1,y=-8.5,label=data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="BC"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-8.5,label=data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="BC"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-8.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="BC"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-8.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="BC"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Resultado"&data$data$Agente=="BC"]) +
     geom_polygon(aes(x=c(ancho/2,ancho+0.2,ancho+0.2,ancho/2),y=c(-8,-8,-9,-9)),fill="lightgrey",alpha=0.3) +
 
     # Tesoro
     #Tesoro_activo1
     geom_text(aes(x=nombre_a2,y=-1.5,label="Dep.BCRA"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-1.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Tesoro.BCRA"]),size = 4,
+    geom_text(aes(x=tot_a2,y=-1.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.Tesoro.BCRA"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.Tesoro.BCRA"]) +
-    geom_text(aes(x=valor_a2,y=-1.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro.BCRA"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-1.5,label=data$data$Variacion[data$data$Nombre=="Dep.Tesoro.BCRA"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-1.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro.BCRA"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-1.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.Tesoro.BCRA"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Tesoro.BCRA"]) +
 
     #Tesoro_activo2
     geom_text(aes(x=nombre_a2,y=-2.5,label="Dep.Vista"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Tesoro.Vista"]),size = 4,
+    geom_text(aes(x=tot_a2,y=-2.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.Tesoro.Vista"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.Tesoro.Vista"]) +
-    geom_text(aes(x=valor_a2,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro.Vista"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Dep.Tesoro.Vista"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-2.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.Tesoro.Vista"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-2.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.Tesoro.Vista"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Tesoro.Vista"]) +
 
     #Tesoro_activo3
     geom_text(aes(x=nombre_a2,y=-3.5,label="Dep.P\u00FAblicos"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Pub.Vista"]),size = 4,
+    geom_text(aes(x=tot_a2,y=-3.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.Pub.Vista"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.Pub.Vista"]) +
-    geom_text(aes(x=valor_a2,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Pub.Vista"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-3.5,label=data$data$Variacion[data$data$Nombre=="Dep.Pub.Vista"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-3.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.Pub.Vista"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-3.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.Pub.Vista"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Pub.Vista"]) +
     
     #Tesoro_activo4
     geom_text(aes(x=nombre_a2,y=-4.5,label="Plazo.Fijo"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=tot_a2,y=-4.5,label=round(data$data$VarAcum[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"]) +
-    geom_text(aes(x=valor_a2,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-4.5,label=data$data$Variacion[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-4.5,label=round(data$data$ValorFinal[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-4.5,label=round(data$data$Variacion[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="T"]) +
     
     #Tesoro_activo5
     geom_text(aes(x=nombre_a2,y=-5.5,label="Dep.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=tot_a2,y=-5.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"]) +
-    geom_text(aes(x=valor_a2,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-5.5,label=data$data$Variacion[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-5.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.USD"&data$data$Agente=="T"]) +
 
     #Tesoro_pasivo1
     geom_text(aes(x=nombre_p2,y=-1.5,label="ATs"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-1.5,label=data$data$VarAcum[data$data$Nombre=="ATs"&data$data$Agente=="T"]),
+    geom_text(aes(x=tot_p2,y=-1.5,label=round(data$data$VarAcum[data$data$Nombre=="ATs"&data$data$Agente=="T"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="ATs"&data$data$Agente=="T"]) +
-    geom_text(aes(x=valor_p2,y=-1.5,label=data$data$ValorFinal[data$data$Nombre=="ATs"&data$data$Agente=="T"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-1.5,label=data$data$Variacion[data$data$Nombre=="ATs"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=valor_p2,y=-1.5,label=round(data$data$ValorFinal[data$data$Nombre=="ATs"&data$data$Agente=="T"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-1.5,label=round(data$data$Variacion[data$data$Nombre=="ATs"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="ATs"&data$data$Agente=="T"]) +
     
     #Tesoro_pasivo2
     geom_text(aes(x=nombre_p2,y=-2.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"]),
+    geom_text(aes(x=tot_p2,y=-2.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"]) +
-    geom_text(aes(x=valor_p2,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=valor_p2,y=-2.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-2.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="T"]) +
     
     #Tesoro_pasivo3
     geom_text(aes(x=nombre_p2,y=-3.5,label="Tit.USD (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"]),
+    geom_text(aes(x=tot_p2,y=-3.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"]) +
-    geom_text(aes(x=valor_p2,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-3.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=valor_p2,y=-3.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-3.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="T"]) +
     
     #Tesoro_resultado
     geom_text(aes(x=nombre_p2,y=-8.5,label="Resultado"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-8.5,label=data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="T"]),
+    geom_text(aes(x=tot_p2,y=-8.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="T"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="T"]) +
-    geom_text(aes(x=valor_p2,y=-8.5,label=data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="T"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-8.5,label=data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="T"]),size = 4,
+    geom_text(aes(x=valor_p2,y=-8.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="T"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-8.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="T"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Resultado"&data$data$Agente=="T"]) +
     geom_polygon(aes(x=c(3*ancho/2+1,2*ancho+1,2*ancho+1,3*ancho/2+1),y=c(-8,-8,-9,-9)),fill="lightgrey",alpha=0.3) +
     
@@ -500,34 +501,34 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     geom_text(aes(x=nombre_a3,y=-1.5,label="Efectivo M\u00EDnimo"),size = 4,hjust=0) +
     #SF_activo1
     geom_text(aes(x=nombre_a3,y=-2.5,label="  Cta.Cte."),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=tot_a3,y=-2.5,label=round(data$data$VarAcum[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color2[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a3,y=-2.5,label=data$data$Variacion[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=valor_a3,y=-2.5,label=round(data$data$ValorFinal[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-2.5,label=round(data$data$Variacion[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="EM_Cta.Cte."&data$data$Agente=="SF"]) +
     
     #SF_activo2
     geom_text(aes(x=nombre_a3,y=-3.5,label="  LELIQ"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=tot_a3,y=-3.5,label=round(data$data$VarAcum[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color2[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a3,y=-3.5,label=data$data$Variacion[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=valor_a3,y=-3.5,label=round(data$data$ValorFinal[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-3.5,label=round(data$data$Variacion[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="EM_LELIQ"&data$data$Agente=="SF"]) +
     
     #SF_activo3
     geom_text(aes(x=nombre_a3,y=-4.5,label="  Tit.Pesos (**)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-4.5,label=data$data$VarAcum[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=tot_a3,y=-4.5,label=round(data$data$VarAcum[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color2[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-4.5,label=data$data$ValorFinal[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a3,y=-4.5,label=data$data$Variacion[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=valor_a3,y=-4.5,label=round(data$data$ValorFinal[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-4.5,label=round(data$data$Variacion[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="EM_Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
     
     #SF_activo4
     geom_text(aes(x=nombre_a3,y=-5.5,label="  Cta.Cte.USD"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-5.5,label=data$data$VarAcum[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=tot_a3,y=-5.5,label=round(data$data$VarAcum[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color2[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-5.5,label=data$data$ValorFinal[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a3,y=-5.5,label=data$data$Variacion[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]),size = 3,
+    geom_text(aes(x=valor_a3,y=-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a3,y=-5.5,label=round(data$data$Variacion[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="EM_Cta.Cte.USD"&data$data$Agente=="SF"]) +
     
     #pintar efectivo minimo
@@ -535,254 +536,254 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
     
     #SF_activo5
     geom_text(aes(x=nombre_a3,y=-6.5,label="Circulante"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-6.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-6.5,label=round(data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-6.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-6.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-6.5,label=round(data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-6.5,label=round(data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Circulante"&data$data$Agente=="SF"]) +
 
     #SF_activo6
     geom_text(aes(x=nombre_a3,y=-7.5,label="Cta.Cte."),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-7.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-7.5,label=round(data$data$VarAcum[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-7.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-7.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-7.5,label=round(data$data$ValorFinal[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-7.5,label=round(data$data$Variacion[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Cta.Cte."&data$data$Agente=="SF"]) +
 
     #SF_activo7
     geom_text(aes(x=nombre_a3,y=-8.5,label="LELIQ/Pases"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-8.5,label=data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-8.5,label=round(data$data$VarAcum[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-8.5,label=data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-8.5,label=data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-8.5,label=round(data$data$ValorFinal[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-8.5,label=round(data$data$Variacion[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="LELIQ"&data$data$Agente=="SF"]) +
     
     #SF_activo8
     geom_text(aes(x=nombre_a3,y=-9.5,label="Pr\u00E9stamos"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-9.5,label=data$data$VarAcum[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-9.5,label=round(data$data$VarAcum[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-9.5,label=data$data$ValorFinal[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-9.5,label=data$data$Variacion[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-9.5,label=round(data$data$ValorFinal[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-9.5,label=round(data$data$Variacion[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Prestamos"&data$data$Agente=="SF"]) +
     
     #SF_activo9
     geom_text(aes(x=nombre_a3,y=-10.5,label="Cta.Cte.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-10.5,label=data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-10.5,label=round(data$data$VarAcum[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-10.5,label=data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-10.5,label=data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-10.5,label=round(data$data$ValorFinal[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-10.5,label=round(data$data$Variacion[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Cta.Cte.USD"&data$data$Agente=="SF"]) +
     
     #SF_activo10
     geom_text(aes(x=nombre_a3,y=-11.5,label="USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-11.5,label=data$data$VarAcum[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-11.5,label=round(data$data$VarAcum[data$data$Nombre=="USD"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="USD"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-11.5,label=data$data$ValorFinal[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-11.5,label=data$data$Variacion[data$data$Nombre=="USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-11.5,label=round(data$data$ValorFinal[data$data$Nombre=="USD"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-11.5,label=round(data$data$Variacion[data$data$Nombre=="USD"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="USD"&data$data$Agente=="SF"]) +
     
     #SF_activo11
     geom_text(aes(x=nombre_a3,y=-12.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a3,y=-12.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=tot_a3,y=-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_a3,y=-12.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a3,y=-12.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_a3,y=-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a3,y=-12.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="SF"]) +
 
     #SF_pasivo1
     geom_text(aes(x=nombre_p3,y=-1.5,label="Dep.Vista"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p3,y=-1.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"]),
+    geom_text(aes(x=tot_p3,y=-1.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_p3,y=-1.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p3,y=-1.5,label=data$data$Variacion[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_p3,y=-1.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p3,y=-1.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Vista"&data$data$Agente=="SF"]) +
     
     #SF_pasivo2
     geom_text(aes(x=nombre_p3,y=-2.5,label="Plazo.Fijo"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p3,y=-2.5,label=data$data$VarAcum[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"]),
+    geom_text(aes(x=tot_p3,y=-2.5,label=round(data$data$VarAcum[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_p3,y=-2.5,label=data$data$ValorFinal[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p3,y=-2.5,label=data$data$Variacion[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_p3,y=-2.5,label=round(data$data$ValorFinal[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p3,y=-2.5,label=round(data$data$Variacion[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="SF"]) +
     
     #SF_pasivo3
     geom_text(aes(x=nombre_p3,y=-3.5,label="Dep.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p3,y=-3.5,label=data$data$VarAcum[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"]),
+    geom_text(aes(x=tot_p3,y=-3.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_p3,y=-3.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p3,y=-3.5,label=data$data$Variacion[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_p3,y=-3.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p3,y=-3.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.USD"&data$data$Agente=="SF"]) +
     
     #SF_resultado
     geom_text(aes(x=nombre_p3,y=-12.5,label="Resultado"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p3,y=-12.5,label=data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="SF"]),
+    geom_text(aes(x=tot_p3,y=-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="SF"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="SF"]) +
-    geom_text(aes(x=valor_p3,y=-12.5,label=data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="SF"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p3,y=-12.5,label=data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="SF"]),size = 4,
+    geom_text(aes(x=valor_p3,y=-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="SF"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p3,y=-12.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="SF"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Resultado"&data$data$Agente=="SF"]) +
     geom_polygon(aes(x=c(5*ancho/2+2,3*ancho+2,3*ancho+2,5*ancho/2+2),y=c(-12,-12,-13,-13)),fill="lightgrey",alpha=0.3) +
 
     # Hogares
     #hogares_activo1
     geom_text(aes(x=nombre_a1,y=-ancho-5.5,label="Circulante"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-5.5,label=data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-5.5,label=round(data$data$VarAcum[data$data$Nombre=="Circulante"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Circulante"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-5.5,label=data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-5.5,label=data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="Circulante"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-5.5,label=round(data$data$Variacion[data$data$Nombre=="Circulante"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Circulante"&data$data$Agente=="H"]) +
 
     #hogares_activo2
     geom_text(aes(x=nombre_a1,y=-ancho-6.5,label="Dep.Vista"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-6.5,label=data$data$VarAcum[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-6.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-6.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-6.5,label=data$data$Variacion[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-6.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-6.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.Vista"&data$data$Agente=="H"]) +
     
     #hogares_activo3
     geom_text(aes(x=nombre_a1,y=-ancho-7.5,label="Plazo.Fijo"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-7.5,label=data$data$VarAcum[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-7.5,label=round(data$data$VarAcum[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-7.5,label=data$data$ValorFinal[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-7.5,label=data$data$Variacion[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-7.5,label=round(data$data$ValorFinal[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-7.5,label=round(data$data$Variacion[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Plazo.Fijo"&data$data$Agente=="H"]) +
     
     #hogares_activo4
     geom_text(aes(x=nombre_a1,y=-ancho-8.5,label="Dep.USD"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-8.5,label=data$data$VarAcum[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-8.5,label=round(data$data$VarAcum[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-8.5,label=data$data$ValorFinal[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-8.5,label=data$data$Variacion[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-8.5,label=round(data$data$ValorFinal[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-8.5,label=round(data$data$Variacion[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Dep.USD"&data$data$Agente=="H"]) +
     
     #hogares_activo5
     geom_text(aes(x=nombre_a1,y=-ancho-9.5,label="USD (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-9.5,label=data$data$VarAcum[data$data$Nombre=="USD"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-9.5,label=round(data$data$VarAcum[data$data$Nombre=="USD"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="USD"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-9.5,label=data$data$ValorFinal[data$data$Nombre=="USD"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-9.5,label=data$data$Variacion[data$data$Nombre=="USD"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-9.5,label=round(data$data$ValorFinal[data$data$Nombre=="USD"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-9.5,label=round(data$data$Variacion[data$data$Nombre=="USD"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="USD"&data$data$Agente=="H"]) +
     
     #hogares_activo6
     geom_text(aes(x=nombre_a1,y=-ancho-10.5,label="LEBAC (*)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-10.5,label=data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-10.5,label=round(data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="LEBAC"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-10.5,label=data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-10.5,label=data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-10.5,label=round(data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-10.5,label=round(data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="LEBAC"&data$data$Agente=="H"]) +
     
     #hogares_activo7
     geom_text(aes(x=nombre_a1,y=-ancho-11.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-11.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-11.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-11.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-11.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-11.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-11.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="H"]) +
     
     #hogares_activo8
     geom_text(aes(x=nombre_a1,y=-ancho-12.5,label="Tit.USD (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a1,y=-ancho-12.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_a1,y=-ancho-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_a1,y=-ancho-12.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a1,y=-ancho-12.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_a1,y=-ancho-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a1,y=-ancho-12.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="H"]) +
     
     #hogares_pasivo1
     geom_text(aes(x=nombre_p1,y=-ancho-5.5,label="Pr\u00E9stamos"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-ancho-5.5,label=data$data$VarAcum[data$data$Nombre=="Prestamos"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_p1,y=-ancho-5.5,label=round(data$data$VarAcum[data$data$Nombre=="Prestamos"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Prestamos"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_p1,y=-ancho-5.5,label=data$data$ValorFinal[data$data$Nombre=="Prestamos"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-ancho-5.5,label=data$data$Variacion[data$data$Nombre=="Prestamos"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-ancho-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="Prestamos"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-ancho-5.5,label=round(data$data$Variacion[data$data$Nombre=="Prestamos"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Prestamos"&data$data$Agente=="H"]) +
     
     #hogares_resultado
     geom_text(aes(x=nombre_p1,y=-ancho-12.5,label="Resultado"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p1,y=-ancho-12.5,label=data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=tot_p1,y=-ancho-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="H"]) +
-    geom_text(aes(x=valor_p1,y=-ancho-12.5,label=data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="H"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p1,y=-ancho-12.5,label=data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="H"]),size = 4,
+    geom_text(aes(x=valor_p1,y=-ancho-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="H"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p1,y=-ancho-12.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="H"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Resultado"&data$data$Agente=="H"]) +
     geom_polygon(aes(x=c(ancho/2,ancho+0.2,ancho+0.2,ancho/2),y=c(-ancho-12,-ancho-12,-ancho-13,-ancho-13)),fill="lightgrey",alpha=0.3) +
 
     # Resto del Mundo
     #RM_activo1
     geom_text(aes(x=nombre_a2,y=-ancho-5.5,label="LEBAC (*)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-ancho-5.5,label=data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_a2,y=-ancho-5.5,label=round(data$data$VarAcum[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_a2,y=-ancho-5.5,label=data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-ancho-5.5,label=data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-ancho-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-ancho-5.5,label=round(data$data$Variacion[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="LEBAC"&data$data$Agente=="RM"]) +
     
     #RM_activo1 usd
     geom_text(aes(x=nombre_a2,y=-ancho-6.5,label="  LEBAC (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-ancho-6.5,label=data$data$VarAcum[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_a2,y=-ancho-6.5,label=round(data$data$VarAcum[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_a2,y=-ancho-6.5,label=data$data$ValorFinal[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a2,y=-ancho-6.5,label=data$data$Variacion[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"]),size = 3,
+    geom_text(aes(x=valor_a2,y=-ancho-6.5,label=round(data$data$ValorFinal[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a2,y=-ancho-6.5,label=round(data$data$Variacion[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="LEBAC_USD"&data$data$Agente=="RM"]) +
     
     #RM_activo2
     geom_text(aes(x=nombre_a2,y=-ancho-7.5,label="Tit.Pesos (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-ancho-7.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_a2,y=-ancho-7.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_a2,y=-ancho-7.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-ancho-7.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-ancho-7.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-ancho-7.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos"&data$data$Agente=="RM"]) +
     
     #RM_activo2 usd
     geom_text(aes(x=nombre_a2,y=-ancho-8.5,label="  Tit.Pesos (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-ancho-8.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_a2,y=-ancho-8.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_a2,y=-ancho-8.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a2,y=-ancho-8.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"]),size = 3,
+    geom_text(aes(x=valor_a2,y=-ancho-8.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a2,y=-ancho-8.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.Pesos_USD"&data$data$Agente=="RM"]) +
     
     #RM_activo3
     geom_text(aes(x=nombre_a2,y=-ancho-9.5,label="Tit.USD (**)"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-ancho-9.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_a2,y=-ancho-9.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_a2,y=-ancho-9.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_a2,y=-ancho-9.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"]),size = 4,
+    geom_text(aes(x=valor_a2,y=-ancho-9.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_a2,y=-ancho-9.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD"&data$data$Agente=="RM"]) +
     
     #RM_activo3 usd
     geom_text(aes(x=nombre_a2,y=-ancho-10.5,label="  Tit.USD (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_a2,y=-ancho-10.5,label=data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_a2,y=-ancho-10.5,label=round(data$data$VarAcum[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_a2,y=-ancho-10.5,label=data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_a2,y=-ancho-10.5,label=data$data$Variacion[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"]),size = 3,
+    geom_text(aes(x=valor_a2,y=-ancho-10.5,label=round(data$data$ValorFinal[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_a2,y=-ancho-10.5,label=round(data$data$Variacion[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Tit.Pub.USD_USD"&data$data$Agente=="RM"]) +
     
     #RM_pasivo1
     geom_text(aes(x=nombre_p2,y=-ancho-5.5,label="Divisas"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-ancho-5.5,label=data$data$VarAcum[data$data$Nombre=="Divisas"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_p2,y=-ancho-5.5,label=round(data$data$VarAcum[data$data$Nombre=="Divisas"&data$data$Agente=="RM"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Divisas"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_p2,y=-ancho-5.5,label=data$data$ValorFinal[data$data$Nombre=="Divisas"&data$data$Agente=="RM"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-ancho-5.5,label=data$data$Variacion[data$data$Nombre=="Divisas"&data$data$Agente=="RM"]),size = 4,
+    geom_text(aes(x=valor_p2,y=-ancho-5.5,label=round(data$data$ValorFinal[data$data$Nombre=="Divisas"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-ancho-5.5,label=round(data$data$Variacion[data$data$Nombre=="Divisas"&data$data$Agente=="RM"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Divisas"&data$data$Agente=="RM"]) +
     
     #RM_pasivo1 usd
     geom_text(aes(x=nombre_p2,y=-ancho-6.5,label="  Divisas (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-ancho-6.5,label=data$data$VarAcum[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_p2,y=-ancho-6.5,label=round(data$data$VarAcum[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_p2,y=-ancho-6.5,label=data$data$ValorFinal[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_p2,y=-ancho-6.5,label=data$data$Variacion[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"]),size = 3,
+    geom_text(aes(x=valor_p2,y=-ancho-6.5,label=round(data$data$ValorFinal[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_p2,y=-ancho-6.5,label=round(data$data$Variacion[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"]) +
     
     #RM_resultado
     geom_text(aes(x=nombre_p2,y=-ancho-11.5,label="Resultado"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-ancho-11.5,label=data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_p2,y=-ancho-11.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_p2,y=-ancho-11.5,label=data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-ancho-11.5,label=data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]),size = 4,
+    geom_text(aes(x=valor_p2,y=-ancho-11.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-ancho-11.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
     
     #RM_resultado usd
     geom_text(aes(x=nombre_p2,y=-ancho-12.5,label="  Resultado (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-ancho-12.5,label=data$data$VarAcum[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"]),
+    geom_text(aes(x=tot_p2,y=-ancho-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),
               size = 3,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_p2,y=-ancho-12.5,label=data$data$ValorFinal[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"]),size = 3,hjust=1) +
-    geom_text(aes(x=var_p2,y=-ancho-12.5,label=data$data$Variacion[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"]),size = 3,
+    geom_text(aes(x=valor_p2,y=-ancho-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
+    geom_text(aes(x=var_p2,y=-ancho-12.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),size = 3,
               color=data$data$Color[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"]) +
     geom_polygon(aes(x=c(3*ancho/2+1,2*ancho+1,2*ancho+1,3*ancho/2+1),y=c(-ancho-11,-ancho-11,-ancho-13,-ancho-13)),fill="lightgrey",alpha=0.3) +
 
