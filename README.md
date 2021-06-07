@@ -14,11 +14,11 @@ Se representa una economía conformada por los siguientes 5 agentes:
 
 5. **Resto del Mundo**. Todos los no residentes.
 
-Para cada uno de estos agentes se consideran sus principales Activos y Pasivos, totalizando **45 cuentas**. Además, se monitorean **4 agregados monetarios**. Todas estas cuentas están vinculadas a través de las **60 operaciones** que pueden realizarse en el simulador.
+Para cada uno de estos agentes se consideran sus principales Activos y Pasivos, totalizando **50 cuentas**, algunas de las cuales se visualizan en pesos y en dólares. Además, se monitorean **4 agregados monetarios**. Todas estas cuentas están vinculadas a través de las **más de 60 operaciones** que pueden realizarse en el simulador.
 
 El resto de la documentación de este proyecto está distribuido en las siguientes páginas
 
 - **[Cuentas](Cuentas.md)**. Descripción de cada una de las cuentas que se incluyen en este ejercicio.
 - **[Operaciones](Operaciones.md)**. Descripción de cada una de las operaciones que se incluyen en este ejercicio.
 - **[Supuestos y simplificaciones](Supuestos.md)** asumidos en este ejercicio.
-- **[Ejemplos](Ejemplos.md)**.
+- **[Ejemplos](https://esterodr.shinyapps.io/hojas_de_balance_ej/)** Se abrirá una aplicación Shiny.

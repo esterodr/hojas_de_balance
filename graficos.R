@@ -771,21 +771,21 @@ balancesheet <- function(data,input1=NA,input2=NA,monto=NA) {
               color=data$data$Color[data$data$Nombre=="Divisas_USD"&data$data$Agente=="RM"]) +
     
     #RM_resultado
-    geom_text(aes(x=nombre_p2,y=-ancho-11.5,label="Resultado"),size = 4,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-ancho-11.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),
+    geom_text(aes(x=nombre_p2,y=-ancho-12.5,label="Resultado"),size = 4,hjust=0) +
+    geom_text(aes(x=tot_p2,y=-ancho-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),
               size = 4,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_p2,y=-ancho-11.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
-    geom_text(aes(x=var_p2,y=-ancho-11.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),size = 4,
+    geom_text(aes(x=valor_p2,y=-ancho-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),size = 4,hjust=1) +
+    geom_text(aes(x=var_p2,y=-ancho-12.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado"&data$data$Agente=="RM"],decimal)),size = 4,
               color=data$data$Color[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
     
     #RM_resultado usd
-    geom_text(aes(x=nombre_p2,y=-ancho-12.5,label="  Resultado (USD)"),size = 3,hjust=0) +
-    geom_text(aes(x=tot_p2,y=-ancho-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),
-              size = 3,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
-    geom_text(aes(x=valor_p2,y=-ancho-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
-    geom_text(aes(x=var_p2,y=-ancho-12.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),size = 3,
-              color=data$data$Color[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"]) +
-    geom_polygon(aes(x=c(3*ancho/2+1,2*ancho+1,2*ancho+1,3*ancho/2+1),y=c(-ancho-11,-ancho-11,-ancho-13,-ancho-13)),fill="lightgrey",alpha=0.3) +
+    # geom_text(aes(x=nombre_p2,y=-ancho-12.5,label="  Resultado (USD)"),size = 3,hjust=0) +
+    # geom_text(aes(x=tot_p2,y=-ancho-12.5,label=round(data$data$VarAcum[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),
+    #           size = 3,color=data$data$Color2[data$data$Nombre=="Resultado"&data$data$Agente=="RM"]) +
+    # geom_text(aes(x=valor_p2,y=-ancho-12.5,label=round(data$data$ValorFinal[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),size = 3,hjust=1) +
+    # geom_text(aes(x=var_p2,y=-ancho-12.5,label=round(data$data$Variacion[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"],decimal)),size = 3,
+    #           color=data$data$Color[data$data$Nombre=="Resultado_USD"&data$data$Agente=="RM"]) +
+    geom_polygon(aes(x=c(3*ancho/2+1,2*ancho+1,2*ancho+1,3*ancho/2+1),y=c(-ancho-12,-ancho-12,-ancho-13,-ancho-13)),fill="lightgrey",alpha=0.3) +
 
     # Configuración
     theme(panel.background = element_blank(),

@@ -3492,7 +3492,7 @@ tiempo <- function(porcentajes) {
                                                                                      data$data$ValorFinal[data$data$Agente=="RM"&data$data$Nombre=="Divisas"])
     
     data <- ajustar_encaje(data)
-    data <- ajustar_encaje(data,moneda = "d")
+    #data <- ajustar_encaje(data,moneda = "d")
     data$tc <- data$tc*(1+porcentajes[1]/100)
     
     
