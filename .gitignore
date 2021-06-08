@@ -5,6 +5,9 @@ update.R
 README.html
 Cuentas.html
 data_old.Rda
+funciones.R
+graficos.R
+data.Rda
 
 # History files
 .Rhistory
